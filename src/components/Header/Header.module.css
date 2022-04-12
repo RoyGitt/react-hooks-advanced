@@ -1,0 +1,25 @@
+.header {
+  font-size: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1abc9c;
+  color: #fff;
+  padding: 1rem 2rem;
+  box-shadow: 2px 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (max-width: 555px) {
+  .header {
+    font-size: 1.4rem;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .header h1 {
+    display: none;
+  }
+  .header {
+    justify-content: center;
+  }
+}

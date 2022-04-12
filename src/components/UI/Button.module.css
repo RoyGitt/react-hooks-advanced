@@ -1,0 +1,19 @@
+.button {
+  align-self: center;
+  margin-top: 4rem;
+  background-color: #1abc9c;
+  color: #fff;
+  font-size: 2rem;
+  font-family: inherit;
+  padding: 0.5rem 2rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #ccc;
+  border-color: #ccc;
+  color: #666666;
+  cursor: not-allowed;
+}

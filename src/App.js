@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
-
+import UserLogin from "./components/UserLogin/UserLogin";
+import Header from "./components/Header/Header";
+import { useState, useEffect } from "react";
+import Home from "./components/Home/Home";
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  console.log(loggedIn);
+
+  useEffect(() => {
+    const loginInfo = localStorage.getItem("isLoggedIn");
+    if (loginInfo === "1") {
+      setLoggedIn(true);
+    }
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header setLoggedIn={setLoggedIn} loggedIn={loggedIn} />
+      {!loggedIn && <UserLogin setLoggedIn={setLoggedIn} />}
+      {loggedIn && <Home />}
+    </>
   );
 }
 
