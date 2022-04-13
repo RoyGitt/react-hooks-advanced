@@ -1,23 +1,20 @@
 import UserLogin from "./components/UserLogin/UserLogin";
 import Header from "./components/Header/Header";
-import { useState, useEffect } from "react";
 import Home from "./components/Home/Home";
-function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  console.log(loggedIn);
+import { AuthContext } from "./store/auth-context";
+import { useContext } from "react";
 
-  useEffect(() => {
-    const loginInfo = localStorage.getItem("isLoggedIn");
-    if (loginInfo === "1") {
-      setLoggedIn(true);
-    }
-  }, []);
+function App() {
+  const userLoginHandler = (email, password) => {
+    console.log(email, password);
+  };
+  const ctx = useContext(AuthContext);
 
   return (
     <>
-      <Header setLoggedIn={setLoggedIn} loggedIn={loggedIn} />
-      {!loggedIn && <UserLogin setLoggedIn={setLoggedIn} />}
-      {loggedIn && <Home />}
+      <Header />
+      {!ctx.isLoggedIn && <UserLogin onUserLogin={userLoginHandler} />}
+      {ctx.isLoggedIn && <Home />}
     </>
   );
 }

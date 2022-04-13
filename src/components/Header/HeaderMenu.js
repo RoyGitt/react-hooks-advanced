@@ -1,16 +1,11 @@
 import classes from "./HeaderMenu.module.css";
 import Button from "../UI/Button";
-import { useState } from "react";
+import { AuthContext } from "../../store/auth-context";
+import { useContext } from "react";
 
 const HeaderMenu = (props) => {
-  const logoutHandler = () => {
-    props.setLoggedIn(false);
-    localStorage.removeItem("isLoggedIn");
-  };
-  const [viewMenu, setViewMenu] = useState(false);
-  const mobileMenu = () => {
-    setViewMenu(!viewMenu);
-  };
+  const ctx = useContext(AuthContext);
+
   return (
     <ul className={classes.menu}>
       <li>
@@ -22,7 +17,7 @@ const HeaderMenu = (props) => {
       <li>
         <Button
           style={{ backgroundColor: "#fff", color: "#1abc9c", margin: "0" }}
-          onClick={logoutHandler}
+          onClick={ctx.logoutHandler}
         >
           Logout
         </Button>

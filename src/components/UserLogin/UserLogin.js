@@ -1,6 +1,7 @@
 import classes from "./UserLogin.module.css";
 import Button from "../UI/Button";
-import { useState, useEffect, useReducer } from "react";
+import { useState, useEffect, useReducer, useContext } from "react";
+import { AuthContext } from "../../store/auth-context";
 
 const emailReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
@@ -19,7 +20,7 @@ const passwordReducer = (state, action) => {
   if (action.type === "INPUT_BLUR") {
     return { value: state.value, valid: state.value.trim().length > 6 };
   }
-  return { value: "", valid: false };
+  return { value: "", valid: undefined };
 };
 
 const UserLogin = (props) => {
@@ -68,21 +69,21 @@ const UserLogin = (props) => {
   const loginHandler = (event) => {
     event.preventDefault();
     if (email.valid && password.valid) {
-      props.setLoggedIn(true);
-      localStorage.setItem("isLoggedIn", "1");
+      ctx.loginHandler();
+      props.onUserLogin(email.value, password.value);
     } else {
       props.setLoggedIn(false);
     }
   };
 
-  console.log(password.value);
-  console.log(password.valid);
+  const ctx = useContext(AuthContext);
+
   return (
     <form className={classes.form} onSubmit={loginHandler}>
       <div>
         <label htmlFor="email">E-mail</label>
         <input
-          className={email.valid === false && classes.invalid}
+          className={email.valid === false ? classes.invalid : null}
           id="email"
           type="email"
           onChange={emailHandler}
@@ -93,7 +94,7 @@ const UserLogin = (props) => {
       <div>
         <label htmlFor="password">Password</label>
         <input
-          className={password.valid === false && classes.invalid}
+          className={password.valid === false ? classes.invalid : null}
           id="password"
           onChange={passwordHandler}
           type="password"
